@@ -1,0 +1,1076 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brand Book · Flávia Mariana</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap');
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --bg:#0f0f0f;
+  --surface:#161616;
+  --surface2:#1e1e1e;
+  --border:#272727;
+  --border-hover:#383838;
+  --text:#e2e2e2;
+  --text-dim:#888;
+  --text-dimmer:#4a4a4a;
+  --gold:#c9a96e;
+  --gold-soft:rgba(201,169,110,0.09);
+  --gold-border:rgba(201,169,110,0.18);
+  --red-soft:rgba(200,80,80,0.08);
+  --red-border:rgba(200,80,80,0.2);
+  --red-text:#d97070;
+  --green-text:#6db896;
+  --sidebar:248px;
+  --ease:180ms cubic-bezier(.4,0,.2,1);
+}
+
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Inter',system-ui,sans-serif;font-size:14px;line-height:1.65;display:flex;min-height:100vh}
+
+/* SIDEBAR */
+.sidebar{
+  width:var(--sidebar);min-height:100vh;
+  background:var(--surface);
+  border-right:1px solid var(--border);
+  position:fixed;top:0;left:0;
+  display:flex;flex-direction:column;
+  z-index:100;
+  transition:transform var(--ease);
+}
+.s-logo{padding:22px 18px 18px;border-bottom:1px solid var(--border)}
+.s-monogram{
+  width:34px;height:34px;background:var(--gold);
+  border-radius:4px;display:flex;align-items:center;justify-content:center;
+  font-family:'DM Serif Display',serif;font-size:14px;color:#0f0f0f;
+  font-weight:700;margin-bottom:10px
+}
+.s-name{font-size:12px;font-weight:600;color:var(--text);letter-spacing:.02em;line-height:1.3}
+.s-sub{font-size:10px;color:var(--text-dimmer);margin-top:3px;font-family:'DM Mono',monospace;letter-spacing:.06em}
+.s-nav{flex:1;padding:10px 0;overflow-y:auto}
+.s-group{
+  font-size:9.5px;font-weight:600;color:var(--text-dimmer);
+  letter-spacing:.12em;text-transform:uppercase;
+  padding:18px 18px 5px;font-family:'DM Mono',monospace
+}
+.s-item{
+  display:flex;align-items:center;gap:9px;
+  padding:7px 18px;cursor:pointer;font-size:12.5px;
+  color:var(--text-dim);transition:all var(--ease);
+  border-left:2px solid transparent;
+}
+.s-item:hover{color:var(--text);background:var(--surface2)}
+.s-item.active{color:var(--gold);border-left-color:var(--gold);background:var(--gold-soft)}
+.s-icon{width:14px;height:14px;flex-shrink:0;opacity:.65}
+.s-item.active .s-icon{opacity:1}
+.s-foot{padding:14px 18px;border-top:1px solid var(--border)}
+.vtag{font-family:'DM Mono',monospace;font-size:10px;color:var(--text-dimmer);background:var(--surface2);border:1px solid var(--border);border-radius:3px;padding:3px 8px;display:inline-block}
+.dot{width:5px;height:5px;background:var(--green-text);border-radius:50%;display:inline-block;margin-right:5px;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+
+/* MAIN */
+.main{margin-left:var(--sidebar);flex:1;min-height:100vh}
+
+/* TOPBAR */
+.topbar{
+  position:sticky;top:0;z-index:50;
+  background:rgba(15,15,15,.92);backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--border);
+  padding:0 28px;height:50px;
+  display:flex;align-items:center;justify-content:space-between
+}
+.tb-title{font-size:12.5px;color:var(--text-dim)}
+.tb-title span{color:var(--text);font-weight:500}
+.tb-actions{display:flex;gap:7px;align-items:center}
+.btn{
+  display:inline-flex;align-items:center;gap:5px;
+  padding:5px 13px;border-radius:5px;font-size:12px;
+  font-weight:500;cursor:pointer;border:none;
+  font-family:'Inter',sans-serif;transition:all var(--ease)
+}
+.btn-ghost{background:transparent;color:var(--text-dim);border:1px solid var(--border)}
+.btn-ghost:hover{background:var(--surface2);color:var(--text);border-color:var(--border-hover)}
+.btn-gold{background:var(--gold);color:#0f0f0f}
+.btn-gold:hover{background:#d4b07a}
+
+/* PAGES */
+.page{display:none;padding:36px 28px;max-width:920px}
+.page.active{display:block;animation:fadeUp 200ms ease}
+@keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+
+/* TYPOGRAPHY */
+.eyebrow{font-family:'DM Mono',monospace;font-size:10px;color:var(--gold);letter-spacing:.1em;text-transform:uppercase;margin-bottom:7px}
+.page-title{font-family:'DM Serif Display',serif;font-size:30px;color:var(--text);line-height:1.2;margin-bottom:10px}
+.page-desc{font-size:13.5px;color:var(--text-dim);max-width:540px;line-height:1.75;margin-bottom:36px}
+
+/* DIVIDER */
+.div{border:none;border-top:1px solid var(--border);margin:28px 0}
+
+/* CARD */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:18px 22px;margin-bottom:10px;transition:border-color var(--ease)}
+.card:hover{border-color:var(--border-hover)}
+.card.gold-border{border-color:var(--gold-border);background:var(--gold-soft)}
+.card-label{font-family:'DM Mono',monospace;font-size:9.5px;color:var(--gold);letter-spacing:.1em;text-transform:uppercase;margin-bottom:7px}
+.card-title{font-size:14.5px;font-weight:600;color:var(--text);margin-bottom:6px}
+.card-body{font-size:13px;color:var(--text-dim);line-height:1.75}
+
+/* GRID */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+
+/* QUOTE */
+.quote{border-left:2px solid var(--gold);padding:14px 18px;background:var(--surface);border-radius:0 6px 6px 0;margin:14px 0}
+.quote p{font-family:'DM Serif Display',serif;font-size:15px;color:var(--text);line-height:1.6;font-style:italic}
+.quote .q-src{font-family:'DM Mono',monospace;font-size:10px;color:var(--text-dimmer);margin-top:7px}
+
+/* TAGS */
+.tag{display:inline-flex;align-items:center;padding:2px 9px;border-radius:3px;font-size:11px;font-family:'DM Mono',monospace;margin:2px;border:1px solid}
+.tg{background:var(--surface2);color:var(--text-dim);border-color:var(--border)}
+.ta{background:var(--gold-soft);color:var(--gold);border-color:var(--gold-border)}
+.tr{background:var(--red-soft);color:var(--red-text);border-color:var(--red-border)}
+
+/* COMPARE */
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border-radius:6px;overflow:hidden;margin-bottom:14px}
+.cmp-col{background:var(--surface);padding:18px}
+.cmp-head{font-size:10px;font-family:'DM Mono',monospace;font-weight:600;letter-spacing:.08em;text-transform:uppercase;margin-bottom:12px;padding-bottom:9px;border-bottom:1px solid var(--border)}
+.cmp-head.r{color:var(--red-text)}.cmp-head.g{color:var(--green-text)}
+.cmp-row{font-size:12.5px;color:var(--text-dim);padding:5px 0;border-bottom:1px solid var(--border)}
+.cmp-row:last-child{border-bottom:none}
+
+/* TRANSFORM ROW */
+.tr-row{display:grid;grid-template-columns:1fr 28px 1fr;gap:10px;align-items:center;padding:12px 14px;background:var(--surface);border:1px solid var(--border);border-radius:6px;margin-bottom:6px;font-size:13px;transition:border-color var(--ease)}
+.tr-row:hover{border-color:var(--border-hover)}
+.tr-from{color:var(--text-dim)}.tr-arrow{color:var(--gold);text-align:center;font-size:15px}.tr-to{color:var(--text);font-weight:500}
+
+/* CHECKLIST */
+.ck{display:flex;align-items:flex-start;gap:11px;padding:11px 13px;background:var(--surface);border:1px solid var(--border);border-radius:6px;margin-bottom:6px;cursor:pointer;transition:all var(--ease)}
+.ck:hover{border-color:var(--border-hover)}
+.ck.done{opacity:.45}
+.ck-box{width:15px;height:15px;border:1.5px solid var(--border-hover);border-radius:3px;flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;transition:all var(--ease)}
+.ck.done .ck-box{background:var(--gold);border-color:var(--gold)}
+.ck-text{font-size:12.5px;color:var(--text-dim);line-height:1.55}
+.ck.done .ck-text{text-decoration:line-through}
+
+/* ALERT */
+.alert{padding:11px 15px;border-radius:6px;font-size:12.5px;line-height:1.6;margin-bottom:14px;border:1px solid}
+.alert-w{background:var(--gold-soft);border-color:var(--gold-border);color:var(--gold)}
+.alert-r{background:var(--red-soft);border-color:var(--red-border);color:var(--red-text)}
+
+/* PROGRESS */
+.prog-bar{height:3px;background:var(--surface2);border-radius:2px;overflow:hidden;margin-top:5px}
+.prog-fill{height:100%;background:var(--gold);border-radius:2px;transition:width 500ms ease}
+
+/* COPY BTN */
+.copy-btn{
+  float:right;margin-top:-2px;
+  display:inline-flex;align-items:center;gap:4px;
+  font-size:10px;font-family:'DM Mono',monospace;
+  color:var(--text-dimmer);cursor:pointer;
+  background:var(--surface2);border:1px solid var(--border);
+  padding:2px 7px;border-radius:3px;transition:all var(--ease)
+}
+.copy-btn:hover{color:var(--text-dim);border-color:var(--border-hover)}
+.copy-btn.ok{color:var(--green-text);border-color:rgba(109,184,150,.3)}
+
+/* MOBILE */
+.mob-btn{
+  display:none;position:fixed;top:11px;left:11px;z-index:200;
+  background:var(--surface);border:1px solid var(--border);
+  color:var(--text);padding:7px 9px;border-radius:5px;cursor:pointer;font-size:15px
+}
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:90}
+
+@media(max-width:768px){
+  .sidebar{transform:translateX(-100%)}
+  .sidebar.open{transform:translateX(0)}
+  .main{margin-left:0}
+  .page{padding:20px 14px}
+  .topbar{padding:0 14px 0 52px}
+  .mob-btn{display:flex;align-items:center}
+  .overlay.on{display:block}
+  .g2,.g3,.cmp{grid-template-columns:1fr}
+  .tr-row{grid-template-columns:1fr}
+  .tr-arrow{display:none}
+  .page-title{font-size:24px}
+}
+</style>
+</head>
+<body>
+
+<button class="mob-btn" onclick="toggleMenu()" aria-label="Menu">☰</button>
+<div class="overlay" id="overlay" onclick="toggleMenu()"></div>
+
+<nav class="sidebar" id="sidebar">
+  <div class="s-logo">
+    <div class="s-monogram">FM</div>
+    <div class="s-name">Flávia Mariana</div>
+    <div class="s-sub">BRAND BOOK · 2025</div>
+  </div>
+  <div class="s-nav">
+
+    <div class="s-group">Fundação</div>
+    <div class="s-item active" onclick="go('nicho',this)">
+      <svg class="s-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7" cy="7" r="5"/><circle cx="7" cy="7" r="2"/></svg>
+      Nicho
+    </div>
+    <div class="s-item" onclick="go('missao',this)">
+      <svg class="s-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 2v10M3 6l4-4 4 4"/></svg>
+      Missão & Manifesto
+    </div>
+    <div class="s-item" onclick="go('valores',this)">
+      <svg class="s-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="7,2 9,5.5 13,6 10,9 10.5,13 7,11 3.5,13 4,9 1,6 5,5.5"/></svg>
+      Valores
+    </div>
+    <div class="s-item" onclick="go('historia',this)">
+      <svg class="s-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 12V4a1 1 0 011-1h8a1 1 0 011 1v8"/><path d="M5 11V7h4v4"/></svg>
+      Brand Story
+    </div>
+
+    <div class="s-group">Posicionamento</div>
+    <div class="s-item" onclick="go('personalidade',this)">
+      <svg class="s-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7" cy="4" r="2.5"/><path d="M2 12c0-2.76 2.24-5 5-5s5 2.24 5 5"/></svg>
+      Personalidade
+    </div>
+    <div class="s-item" onclick="go('frases',this)">
+      <svg class="s-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 4h10M2 7h7M2 10h5"/></svg>
+      Frases de posicionamento
+    </div>
+    <div class="s-item" onclick="go('naoesou',this)">
+      <svg class="s-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7" cy="7" r="5"/><path d="M4.5 4.5l5 5M9.5 4.5l-5 5"/></svg>
+      O que não sou
+    </div>
+
+    <div class="s-group">Tom de voz</div>
+    <div class="s-item" onclick="go('pilares',this)">
+      <svg class="s-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="8" width="2" height="4"/><rect x="6" y="5" width="2" height="7"/><rect x="10" y="2" width="2" height="10"/></svg>
+      5 Pilares editoriais
+    </div>
+    <div class="s-item" onclick="go('vocabulario',this)">
+      <svg class="s-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="10" height="10" rx="1.5"/><line x1="4" y1="5" x2="10" y2="5"/><line x1="4" y1="7.5" x2="8" y2="7.5"/></svg>
+      Vocabulário
+    </div>
+    <div class="s-item" onclick="go('regras',this)">
+      <svg class="s-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="2,7 5,10 12,3"/></svg>
+      Regras técnicas
+    </div>
+
+    <div class="s-group">Avatar</div>
+    <div class="s-item" onclick="go('avatar',this)">
+      <svg class="s-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7" cy="4" r="2.5"/><path d="M2 12c0-2.76 2.24-5 5-5s5 2.24 5 5"/></svg>
+      Perfil & Dores
+    </div>
+    <div class="s-item" onclick="go('gatilhos',this)">
+      <svg class="s-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 2l1.5 4H13l-3.5 2.5 1.5 4L7 10l-4 2.5 1.5-4L1 6h4.5z"/></svg>
+      Gatilhos & Objeções
+    </div>
+    <div class="s-item" onclick="go('transformacoes',this)">
+      <svg class="s-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 7h10M8 3l4 4-4 4"/></svg>
+      Transformações
+    </div>
+    <div class="s-item" onclick="go('produtos',this)">
+      <svg class="s-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="10" height="8" rx="1"/><path d="M5 4V3a2 2 0 014 0v1"/></svg>
+      Estrutura de produto
+    </div>
+
+    <div class="s-group">Checklist</div>
+    <div class="s-item" onclick="go('checklist',this)">
+      <svg class="s-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="10" height="10" rx="1.5"/><polyline points="4.5,7 6,8.5 9.5,5"/></svg>
+      Checklist de publicação
+    </div>
+
+  </div>
+  <div class="s-foot">
+    <span class="vtag"><span class="dot"></span>Ativo</span>
+  </div>
+</nav>
+
+<main class="main">
+  <div class="topbar">
+    <div class="tb-title">Brand Book · <span id="ptitle">Nicho</span></div>
+    <div class="tb-actions">
+      <button class="btn btn-ghost" onclick="window.print()">↓ PDF</button>
+    </div>
+  </div>
+
+  <!-- ======== NICHO ======== -->
+  <div class="page active" id="page-nicho">
+    <div class="eyebrow">Fundação</div>
+    <h1 class="page-title">Nicho</h1>
+
+    <div class="quote">
+      <p>Educação emocional para mulheres que foram fortes para todos, menos para si, e que desejam reconstruir autonomia emocional, limites, autoestima e paz.</p>
+      <div class="q-src">DEFINIÇÃO DE NICHO · versão direta</div>
+    </div>
+
+    <div class="div"></div>
+
+    <div class="card-label" style="margin-bottom:10px">Versão premium</div>
+    <div class="card gold-border">
+      <div class="card-body" style="color:var(--text);line-height:1.85;font-size:13.5px">
+        Sou referência em educação emocional e reconstrução de identidade feminina, para mulheres que foram fortes para todos, menos para si mesmas: mulheres funcionais, conscientes e aparentemente estruturadas por fora, que carregam uma ruptura silenciosa entre quem parecem ser e quem deixaram de ser por dentro.<br><br>
+        Minha abordagem nasce da experiência real, da formação em educação e artes cênicas e do desenvolvimento humano. Uso a arte e a expressão como instrumentos de autoconhecimento e voz, porque é no espaço da expressão que muitas mulheres encontram pela primeira vez o que não conseguiam dizer em palavras.<br><br>
+        Conduzo mulheres do autoabandono à autonomia emocional, da autoestima perdida à identidade reconstruída, dos limites que nunca foram colocados à paz que vem de se escolher com clareza.<br><br>
+        Porque o que eu conduzo não é uma fórmula. É a arte de se encontrar e se reconstruir com verdade.
+      </div>
+    </div>
+
+    <div class="div"></div>
+
+    <div class="card-label" style="margin-bottom:10px">Inimigo em comum da marca</div>
+    <div class="card">
+      <div class="card-title">O autoabandono feminino</div>
+      <div class="card-body">Tudo aquilo que faz uma mulher se desconectar de si mesma, perder a própria voz, duvidar do seu valor, aceitar menos do que merece, viver no automático, carregar responsabilidades sem se cuidar, se calar para manter vínculos e adiar a própria vida por medo de julgamento, culpa ou rejeição.<br><br>
+      Aparece também na cultura da performance vazia: a mulher que tenta parecer forte, produtiva e bem-sucedida, mas não tem sustentação emocional para viver com verdade. O inimigo não é o esforço, a ambição ou o crescimento. É a exigência de performar uma vida que não está sustentada por dentro.</div>
+    </div>
+
+    <div class="div"></div>
+
+    <div class="card-label" style="margin-bottom:10px">Referência em quê</div>
+    <div class="card">
+      <div class="card-body">Educação emocional e protagonismo feminino para mulheres em fases de reconstrução de identidade. Ser reconhecida por ajudar mulheres a desenvolverem consciência, autoestima, autonomia emocional, voz e direção depois de fases de perda, sobrecarga, desvalorização, rupturas, mudanças ou apagamento de si.<br><br>
+      O posicionamento une educação, experiência de vida, escuta, comunicação e desenvolvimento humano. A marca não gira em torno de religião, relacionamento ou dependência emocional. Gira em torno de reconstrução de identidade, liderança de si e protagonismo feminino.</div>
+    </div>
+  </div>
+
+  <!-- ======== MISSÃO & MANIFESTO ======== -->
+  <div class="page" id="page-missao">
+    <div class="eyebrow">Fundação</div>
+    <h1 class="page-title">Missão & Manifesto</h1>
+
+    <div class="card-label" style="margin-bottom:10px">Missão</div>
+    <div class="card gold-border">
+      <div class="card-body" style="color:var(--text);font-size:13.5px;line-height:1.85">
+        A marca existe para conduzir mulheres funcionais, que foram fortes para todos menos para si mesmas, de volta para si: com autonomia emocional, limites reais, autoestima reconstruída e paz que não depende de silêncio ou submissão.<br><br>
+        Conduz mulheres que passaram anos sustentando família, trabalho, relações e expectativas alheias, e que num determinado momento percebem que desapareceram de si mesmas no processo, a reconstruírem identidade, postura e direção pela educação emocional.<br><br>
+        Posicionamento contra o autoabandono como padrão normalizado e contra a ideia de que uma mulher precisa destruir a própria vida para começar a ocupar o lugar que lhe pertence dentro dela.
+      </div>
+    </div>
+
+    <div class="div"></div>
+
+    <div class="card-label" style="margin-bottom:10px">Manifesto</div>
+    <div class="quote">
+      <p>Existe uma mulher que já reinventou a própria vida mais de uma vez, que sabe trabalhar, persistir e recomeçar, mas que num determinado ponto do caminho percebe que reconstruiu tudo ao redor sem se incluir em nenhuma das versões que construiu. Ela não chegou aqui por fraqueza. Chegou porque aprendeu muito cedo que ser forte significa sustentar os outros, e que sustentar a si mesma seria, em algum nível, egoísmo. Eu conheço esse caminho porque percorri boa parte dele. E aprendi, da forma mais concreta possível, que força sem sustentação interna não é força: é sobrevivência com outro nome. Reinventar-se não é um talento especial. É uma habilidade que qualquer mulher pode desenvolver quando tem clareza, processo e a ousadia de se incluir como prioridade dentro da própria vida. Meu trabalho existe para conduzir essa mulher de volta a si, não para que abandone o que construiu, mas para que pare de ser a única coisa que ficou fora do que construiu.</p>
+      <div class="q-src">MANIFESTO DA MARCA</div>
+    </div>
+
+    <div class="div"></div>
+
+    <div class="card-label" style="margin-bottom:10px">Sensações que a marca quer provocar</div>
+    <div class="g2">
+      <div class="card">
+        <div class="card-label">01</div>
+        <div class="card-title">Reconhecimento</div>
+        <div class="card-body">A mulher sente que alguém está descrevendo exatamente o que ela vive, com a precisão que ela nunca encontrou num livro de autoajuda ou num post motivacional. O reconhecimento é o primeiro alívio: o de saber que o que sente tem nome e não é exagero nem fraqueza.</div>
+      </div>
+      <div class="card">
+        <div class="card-label">02</div>
+        <div class="card-title">Segurança com verdade</div>
+        <div class="card-body">Ela sente que pode aparecer com as contradições que tem, sem precisar se preparar ou se apresentar diferente do que é. E também sente, desde o começo, que não vai ficar confortável dentro do padrão. Segurança não é ausência de confronto: é confiança de que o confronto não vai humilhá-la.</div>
+      </div>
+      <div class="card">
+        <div class="card-label">03</div>
+        <div class="card-title">Clareza e direção</div>
+        <div class="card-body">A sensação de que existe um caminho concreto entre o que ela sente hoje e a postura que quer ter, e que esse caminho não exige que ela destrua nada: exige que ela pare de se excluir do que está construindo.</div>
+      </div>
+      <div class="card">
+        <div class="card-label">04</div>
+        <div class="card-title">Autonomia prática</div>
+        <div class="card-body">Depois de cada ponto de contato com a marca, a mulher sai com algo que pode aplicar, não com uma inspiração que dura três dias e some. O trabalho é educativo: quer produzir uma mulher mais capaz de se conduzir, não mais dependente de Flávia para se sustentar.</div>
+      </div>
+      <div class="card">
+        <div class="card-label">05</div>
+        <div class="card-title">Urgência responsável</div>
+        <div class="card-body">A mulher sente, com clareza e sem crueldade, que continuar adiando o olhar para si tem um custo real. O objetivo não é motivá-la: é acordá-la. Esse incômodo não é agressão, é cuidado. É o tipo de verdade que só tem valor quando vem de alguém que passou pelo mesmo lugar e não está julgando por estar nele.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======== VALORES ======== -->
+  <div class="page" id="page-valores">
+    <div class="eyebrow">Fundação</div>
+    <h1 class="page-title">Valores</h1>
+
+    <div class="card-label" style="margin-bottom:10px">7 valores da marca</div>
+
+    <div class="card" style="margin-bottom:8px">
+      <div class="card-label">01 · Verdade antes de conforto</div>
+      <div class="card-body">O conforto que mantém uma mulher dentro de um padrão que a adoece não é cuidado, é cumplicidade com o problema. Toda entrega começa pela disposição de nomear com precisão o que está acontecendo, mesmo quando isso confronta. Na comunicação, aparece em conteúdo que vai além da validação. Na condução de processos, aparece no confronto responsável que aponta o que precisa ser encarado sem culpar quem chegou até ali carregando muito sozinha.</div>
+    </div>
+    <div class="card" style="margin-bottom:8px">
+      <div class="card-label">02 · Educação como instrumento de autonomia</div>
+      <div class="card-body">Formação não é de coach nem de terapeuta. É de educadora, com base em Freire, Boal e anos de sala de aula, e isso define fundamentalmente como conduz: o foco é sempre fazer com que a mulher se torne protagonista do próprio processo, não dependente de Flávia para se sustentar. Uma entrega que cria dependência não está resolvendo o problema certo.</div>
+    </div>
+    <div class="card" style="margin-bottom:8px">
+      <div class="card-label">03 · Expressão como metodologia</div>
+      <div class="card-body">Usa o teatro, a voz, o corpo e a expressão como ferramentas de trabalho porque sabe o que acontece quando uma mulher passa anos calando o que sente: as palavras param de funcionar como acesso. A expressão chega onde a fala direta não chega, e esse caminho não é ornamento, é método.</div>
+    </div>
+    <div class="card" style="margin-bottom:8px">
+      <div class="card-label">04 · Acolhimento com direção</div>
+      <div class="card-body">Escuta, reconhece, não julga. E também não deixa a mulher confortável dentro do padrão que está custando caro para ela. Esse equilíbrio, firmeza com sensibilidade, é o que diferencia dos dois extremos que o mercado oferece: o acolhimento puro que não confronta e o confronto agressivo que culpa. O que se oferece é condução.</div>
+    </div>
+    <div class="card" style="margin-bottom:8px">
+      <div class="card-label">05 · Sustentação antes de performance</div>
+      <div class="card-body">Uma mulher que parece bem por fora mas está esvaziada por dentro não está bem: está funcionando. Antes de qualquer resultado externo, o trabalho constrói base emocional real. Performance sem sustentação interna não é transformação, é sobrecarga com outro nome.</div>
+    </div>
+    <div class="card" style="margin-bottom:8px">
+      <div class="card-label">06 · Acessibilidade sem superficialidade</div>
+      <div class="card-body">Formação da periferia, escola pública, trabalho de domingo a domingo para pagar a faculdade. A linguagem não é para um público que já tem acesso fácil a tudo. É para a mulher que construiu com esforço o que tem e que merece profundidade real, não conteúdo que reduz sua vida a frases bonitas.</div>
+    </div>
+    <div class="card">
+      <div class="card-label">07 · Responsabilidade como respeito</div>
+      <div class="card-body">Não traz a mulher para dentro do processo para validá-la na dor nem para culpá-la por estar nela. Traz para que ela possa olhar com honestidade para o que está mantendo e assumir responsabilidade sobre o que pode mudar. Isso é respeito: tratá-la como adulta capaz de se conduzir quando tem o processo certo.</div>
+    </div>
+
+    <div class="div"></div>
+
+    <div class="card-label" style="margin-bottom:10px">Bandeiras que a marca defende</div>
+    <div class="g3">
+      <div class="card">
+        <div class="card-title">Respeito, verdade e paz</div>
+        <div class="card-body" style="font-size:12px">Nenhuma mulher deve precisar viver em guerra consigo mesma para caber em relações, ambientes ou expectativas que a diminuem. Respeito, verdade e paz não são luxos emocionais, são bases para uma vida digna.</div>
+      </div>
+      <div class="card">
+        <div class="card-title">Ousadia e liberdade</div>
+        <div class="card-body" style="font-size:12px">Uma mulher pode ir além dos limites que a vida, as dores, as pessoas ou a própria história tentaram impor. Liberdade não é ausência de responsabilidade. É a possibilidade de escolher com consciência, coragem e dignidade.</div>
+      </div>
+      <div class="card">
+        <div class="card-title">Transformação pela educação</div>
+        <div class="card-body" style="font-size:12px">Educação, consciência emocional e desenvolvimento humano têm força para reconstruir identidade, ampliar visão, fortalecer autoestima e devolver direção a mulheres que se perderam de si.</div>
+      </div>
+    </div>
+
+    <div class="div"></div>
+
+    <div class="card-label" style="margin-bottom:10px">O que a marca combate</div>
+    <div class="alert alert-r">A ideia de que força feminina é a capacidade de suportar indefinidamente sem pedir, sem reclamar, sem parar. Isso não é força: é autoabandono com verniz de virtude. A promessa de transformação instantânea, o método que entrega mudança em X dias, o conteúdo que valida sem confrontar. Qualquer posicionamento que reduza a vida dessas mulheres a um único tema.</div>
+
+    <div class="card-label" style="margin-bottom:10px">O que não é negociável</div>
+    <div class="g3">
+      <div class="card">
+        <div class="card-body" style="font-size:12.5px"><strong style="color:var(--text)">Respeito</strong><br>Nenhum processo que conduz, nenhum conteúdo que produz e nenhuma relação que estabelece abre espaço para que a história de uma mulher seja tratada como espetáculo ou conteúdo descartável.</div>
+      </div>
+      <div class="card">
+        <div class="card-body" style="font-size:12.5px"><strong style="color:var(--text)">Autonomia como modelo</strong><br>O objetivo é que a mulher saia mais capaz de se conduzir, não mais dependente de Flávia para se sustentar. Uma marca que cultiva dependência está resolvendo o problema errado.</div>
+      </div>
+      <div class="card">
+        <div class="card-body" style="font-size:12.5px"><strong style="color:var(--text)">Processo, não aparência</strong><br>Não se trata de parecer transformada: trata-se de reconstruir a base de dentro para fora, com consciência, limite e paz.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======== BRAND STORY ======== -->
+  <div class="page" id="page-historia">
+    <div class="eyebrow">Fundação</div>
+    <h1 class="page-title">Brand Story</h1>
+
+    <div class="card gold-border" style="margin-bottom:20px">
+      <div class="card-body" style="color:var(--text);font-size:13.5px;line-height:1.9">
+        A primeira reinvenção aconteceu antes de eu ter nome para isso. Em 1997, aos 14 anos, meu pai morreu atropelado na Radial Leste voltando do trabalho. Ele saiu jovem do Nordeste sem estudo, construiu o que pôde com o que tinha e deixou como herança mais duradoura uma frase que carrego até hoje: "Estuda para ser alguém na vida, para não ser como eu." Na semana seguinte à morte dele, comecei a trabalhar. Não havia outra opção. E aprendi muito cedo que reinventar não é um ato de heroísmo. É uma resposta ao que a vida impõe quando você não tem condição de parar.<br><br>
+        Estudei à noite, trabalhei de domingo a domingo numa bomboniére para pagar a faculdade de Artes Cênicas. Me tornei professora em 2003, tremendo de medo, numa escola conhecida como Morro do Sabão, em São Mateus, sem experiência e sem manual de instrução. Fiquei. O medo foi virando método.<br><br>
+        A EJA me deu algo que a formação acadêmica sozinha não consegue dar: ela me mostrou o que acontece com uma pessoa quando passa anos sem ser vista. Ali, no contato com adultos que voltavam para a escola depois de décadas, com vidas marcadas por responsabilidade precoce e silêncio acumulado, entendi que educar não é transmitir conteúdo. É abrir espaço para que alguém se reconheça, encontre palavras para o que sente e perceba que ainda pode construir outro caminho. Paulo Freire, Boal, Spolin, o teatro do oprimido: eram instrumentos de reconhecimento, não de instrução. Você coloca uma pessoa num jogo teatral e ela revela o que não consegue dizer de frente.<br><br>
+        Fui coordenadora pedagógica, fiz mestrado em gestão educacional, apresentei trabalho num congresso internacional em Santiago, viajei sozinha para o exterior pela primeira vez enquanto minha filha se recuperava de cirurgia. Tive duas filhas. Construí uma vida que por fora parecia estruturada e coerente. E fui perdendo partes de mim dentro dessa construção sem perceber quando exatamente isso aconteceu.<br><br>
+        Quando o casamento terminou, não foi só um relacionamento que acabou. Foi a estrutura inteira de um papel que eu havia ocupado por anos: a mulher forte, funcional, que dava conta de tudo para todos e nunca aparecia na lista do que precisava de cuidado. Fiquei divorciada enquanto ainda me comportava como se precisasse da aprovação de alguém que já havia refeito a própria vida. Demorei para entender que dependência emocional não é fraqueza de caráter. É um padrão aprendido dentro de vínculos onde você aprende que para manter pertencimento, você precisa se diminuir.<br><br>
+        A segunda reinvenção foi mais difícil do que a primeira, porque ninguém te prepara para reconstruir identidade quando você ainda está de pé, funcionando, parecendo bem por fora. Passei por terapia, por grupos de processo, por uma instituição que me julgou pelo simples fato de ser divorciada. Saí de lá de cabeça erguida. Não com facilidade, mas com uma decisão que fui construindo aos poucos: a de que nenhum pertencimento vale o preço de me desrespeitar.<br><br>
+        E então a terceira reinvenção: escolher o que fazer com tudo isso. Não virei especialista em autoajuda. Não criei método do zero como se a experiência não tivesse acontecido. Carreguei a formação pedagógica, o teatro, os anos de EJA, o processo pessoal e a clareza de quem conhece esse terreno por dentro. E entendi que a mulher que conduzo nos meus processos, no meu conteúdo, nos meus grupos, é a mesma mulher que eu fui: funcional, responsável, forte para todos, invisível para si.<br><br>
+        Essa é a única credencial que o mercado não vende e nenhuma formação confere. Não falo desse lugar como quem chegou do outro lado iluminada. Falo como quem percorreu o caminho com os dois pés no chão, sabe onde estão as pedras e entende a diferença entre acolher e conduzir.
+      </div>
+    </div>
+
+    <div class="div"></div>
+
+    <div class="card-label" style="margin-bottom:10px">Porquê da marca</div>
+    <div class="card">
+      <div class="card-body">Ajudar mulheres a recuperarem consciência sobre si mesmas, reconstruírem sua identidade e voltarem a ocupar a própria vida com mais clareza, autonomia emocional e protagonismo.<br><br>
+      Porque sabe o que é se perder em responsabilidades, relações, expectativas, julgamentos, dores, sobrecargas e ciclos que vão diminuindo a mulher por dentro. Também sabe o que é se reconstruir, voltar a se ouvir, recuperar autoestima, reposicionar escolhas e entender que a própria história ainda pode seguir com dignidade.<br><br>
+      O porquê é transformar experiência em educação, dor em consciência e recomeço em caminho. Não apenas inspirar mulheres, mas ajudá-las a se sustentarem por dentro. Porque performance sem sustentação emocional adoece. Aparência sem verdade esgota. E força sem paz vira sobrevivência.</div>
+    </div>
+
+    <div class="div"></div>
+
+    <div class="card-label" style="margin-bottom:10px">5 elementos que representam a marca</div>
+    <div class="g2">
+      <div class="card"><div class="card-label">01</div><div class="card-title">Educação</div><div class="card-body" style="font-size:12px">Base da trajetória, da visão de mundo e da transformação que a marca acredita.</div></div>
+      <div class="card"><div class="card-label">02</div><div class="card-title">Teatro</div><div class="card-body" style="font-size:12px">Representa voz, corpo, presença, expressão, coragem e verdade. O teatro ensinou que pessoas precisam de espaço para se reconhecer e se colocar no mundo.</div></div>
+      <div class="card"><div class="card-label">03</div><div class="card-title">Escuta</div><div class="card-body" style="font-size:12px">A força está em perceber o que muitas vezes não é dito, mas precisa ser compreendido.</div></div>
+      <div class="card"><div class="card-label">04</div><div class="card-title">Recomeço</div><div class="card-body" style="font-size:12px">A história não foi linear. Recomeçar muitas vezes tornou a marca mais consciente, mais forte e mais inteira.</div></div>
+      <div class="card"><div class="card-label">05</div><div class="card-title">Ousadia</div><div class="card-body" style="font-size:12px">A arte de constranger a vida, de provocar o impossível, de tensionar os limites e de não aceitar uma existência pequena quando ainda há caminho, movimento e transformação possíveis.</div></div>
+    </div>
+  </div>
+
+  <!-- ======== PERSONALIDADE ======== -->
+  <div class="page" id="page-personalidade">
+    <div class="eyebrow">Posicionamento</div>
+    <h1 class="page-title">Personalidade da marca</h1>
+
+    <div class="card gold-border" style="margin-bottom:18px">
+      <div class="card-body" style="color:var(--text);font-size:13.5px;line-height:1.9">
+        Direta sem ser agressiva. Escuta real, não performática, porque aprendeu que escutar de verdade é um ato que exige treino e que poucos praticam de fato. A linguagem é acessível porque cresceu na periferia e aprendeu que conhecimento profundo não precisa de vocabulário difícil para ser levado a sério. Quando fala, fala de dentro, não de cima. Não se coloca como quem chegou do outro lado iluminada: se coloca como quem conhece o terreno e sabe onde estão as pedras.<br><br>
+        Tem formação acadêmica, mestrado, coordenação pedagógica, anos de EJA, e isso informa como constrói processos. Mas não é o que coloca na frente quando se comunica. O que fica na frente é a autenticidade de alguém que passou por isso e que não transforma a própria história em conteúdo motivacional.<br><br>
+        Usa o teatro como instrumento de trabalho e isso aparece no jeito como se apresenta: presença, voz, corpo, ritmo de fala. Não é a profissional por trás da tela com postura clínica e distante. Está presente de verdade.<br><br>
+        Foi ousada antes de saber que isso tinha nome. Entrou numa escola sem experiência e ficou. Fez mestrado enquanto amamentava. Viajou sozinha para o exterior pela primeira vez para apresentar um trabalho enquanto a filha estava internada. Saiu de um lugar que a julgava em vez de se dobrar à opinião de quem a julgava. Ousadia não é coragem instantânea. É a decisão, repetida muitas vezes, de não aceitar uma versão menor de si mesma só porque alguém decidiu que não cabia num espaço maior.<br><br>
+        Não ostenta, não finge ter mais do que tem, não vende promessa impossível. A estética é limpa, humana, sem excessos. O ritmo é firme, não frenético. A comunicação não segue a lógica do hype: segue a lógica de quem tem algo real para dizer e não precisa gritar para ser ouvida.
+      </div>
+    </div>
+
+    <div class="div"></div>
+
+    <div class="card-label" style="margin-bottom:10px">3 diferenciais em relação ao mercado</div>
+    <div class="card" style="margin-bottom:8px">
+      <div class="card-label">01</div>
+      <div class="card-title">Une educação, vida real e desenvolvimento humano</div>
+      <div class="card-body">A trajetória não vem apenas de estudo, nem apenas de vivência pessoal. Nasce da união entre formação, sala de aula, coordenação, maternidade, perdas, recomeços e reconstrução.</div>
+    </div>
+    <div class="card" style="margin-bottom:8px">
+      <div class="card-label">02</div>
+      <div class="card-title">Escuta acessível, sensível e firme</div>
+      <div class="card-body">A escuta não é distante, técnica demais ou fria. Consegue traduzir temas profundos de forma compreensível, sem perder sensibilidade e sem tratar a dor humana com superficialidade. Acolhe a história da mulher, mas também ajuda a dar nome, organizar, enxergar padrões, assumir responsabilidade e construir direção.</div>
+    </div>
+    <div class="card">
+      <div class="card-label">03</div>
+      <div class="card-title">Sustentação emocional antes de performance</div>
+      <div class="card-body">Não acredita em uma mulher que apenas parece forte, produtiva e bem resolvida por fora, mas está desconectada de si por dentro. O trabalho valoriza base, identidade, consciência, limites e maturidade antes de qualquer performance externa.</div>
+    </div>
+  </div>
+
+  <!-- ======== FRASES ======== -->
+  <div class="page" id="page-frases">
+    <div class="eyebrow">Posicionamento</div>
+    <h1 class="page-title">Frases de posicionamento</h1>
+    <p class="page-desc">Textos extraídos diretamente dos documentos. Prontos para uso. Clique em "copiar" para levar para qualquer canal.</p>
+
+    <div class="card gold-border" style="margin-bottom:10px">
+      <div class="card-label">Ultra-curta · bio header, thumbnail, visual <button class="copy-btn" id="cb1" onclick="cp('cb1','Para a mulher que sustentou tudo, menos a si mesma.')">copiar</button></div>
+      <div style="font-family:'DM Serif Display',serif;font-size:22px;color:var(--text);line-height:1.3;margin-top:8px">Para a mulher que sustentou tudo, menos a si mesma.</div>
+    </div>
+
+    <div class="card" style="margin-bottom:10px">
+      <div class="card-label">Bio · Instagram, LinkedIn <button class="copy-btn" id="cb2" onclick="cp('cb2','Educadora especialista em educação emocional. Conduzo mulheres que foram fortes para todos, menos para si, a reconstruírem autonomia emocional, identidade e paz, sem precisar destruir o que já construíram para voltar a existir dentro disso.')">copiar</button></div>
+      <div class="card-body" style="color:var(--text);font-size:13.5px;margin-top:8px">Educadora especialista em educação emocional. Conduzo mulheres que foram fortes para todos, menos para si, a reconstruírem autonomia emocional, identidade e paz, sem precisar destruir o que já construíram para voltar a existir dentro disso.</div>
+    </div>
+
+    <div class="card" style="margin-bottom:10px">
+      <div class="card-label">Apresentação · lives, eventos, vídeo <button class="copy-btn" id="cb3" onclick="cp('cb3','Sou educadora com formação em artes cênicas e gestão educacional, e trabalho com educação emocional para mulheres que passaram anos sustentando tudo para todos e um dia perceberam que desapareceram de si mesmas no processo. Conheço esse caminho por dentro. Conduzo o percurso de volta.')">copiar</button></div>
+      <div class="card-body" style="color:var(--text);font-size:13.5px;margin-top:8px">Sou educadora com formação em artes cênicas e gestão educacional, e trabalho com educação emocional para mulheres que passaram anos sustentando tudo para todos e um dia perceberam que desapareceram de si mesmas no processo. Conheço esse caminho por dentro. Conduzo o percurso de volta.</div>
+    </div>
+
+    <div class="card" style="margin-bottom:10px">
+      <div class="card-label">Versão emocional · copy de oferta, lives <button class="copy-btn" id="cb4" onclick="cp('cb4','Eu conduzo mulheres que foram fortes para todos, menos para si mesmas, a voltarem para si com consciência, limites, autoestima e paz, sem precisar destruir a própria vida para reconstruir a própria identidade.')">copiar</button></div>
+      <div class="card-body" style="color:var(--text);font-size:13.5px;margin-top:8px">Eu conduzo mulheres que foram fortes para todos, menos para si mesmas, a voltarem para si com consciência, limites, autoestima e paz, sem precisar destruir a própria vida para reconstruir a própria identidade.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Versão completa · página de vendas, apresentação longa <button class="copy-btn" id="cb5" onclick="cp('cb5','Eu ajudo mulheres funcionais, maduras e emocionalmente cansadas a saírem do autoabandono e reconstruírem autonomia emocional, limites, autoestima e paz, para que voltem a se reconhecer, se posicionar e ocupar a própria vida com mais verdade.')">copiar</button></div>
+      <div class="card-body" style="color:var(--text);font-size:13.5px;margin-top:8px">Eu ajudo mulheres funcionais, maduras e emocionalmente cansadas a saírem do autoabandono e reconstruírem autonomia emocional, limites, autoestima e paz, para que voltem a se reconhecer, se posicionar e ocupar a própria vida com mais verdade.</div>
+    </div>
+  </div>
+
+  <!-- ======== O QUE NÃO SOU ======== -->
+  <div class="page" id="page-naoesou">
+    <div class="eyebrow">Posicionamento</div>
+    <h1 class="page-title">O que não sou</h1>
+
+    <div class="alert alert-w" style="margin-bottom:20px">Este documento é estratégico. Delimita o trabalho para evitar confusão de posicionamento, atrair o público certo e recusar o que está fora do escopo sem precisar explicar caso a caso.</div>
+
+    <div class="card" style="margin-bottom:8px">
+      <div class="card-label">Não sou terapeuta</div>
+      <div class="card-body">Não faço processo clínico. Se o que a pessoa precisa é de acompanhamento psicológico contínuo, aprofundamento diagnóstico ou suporte para transtornos de saúde mental, o caminho é buscar um profissional de saúde mental habilitado. O trabalho de Flávia pode coexistir com terapia, mas não a substitui e não compete com ela.</div>
+    </div>
+    <div class="card" style="margin-bottom:8px">
+      <div class="card-label">Não sou coach</div>
+      <div class="card-body">Não trabalha com metas de performance, produtividade emocional ou técnicas de alto rendimento. Não existe aqui método em X passos que garante resultado em X dias. Quem vende isso está resolvendo o problema errado ou está vendendo o que o público quer ouvir, não o que ele precisa enfrentar.</div>
+    </div>
+    <div class="card" style="margin-bottom:8px">
+      <div class="card-label">Não sou criadora de conteúdo de autoajuda</div>
+      <div class="card-body">O que se produz não existe para inspirar e passar. Existe para nomear o que está acontecendo, confrontar o que precisa ser confrontado e abrir caminho para que algo concreto mude na postura, não só na percepção.</div>
+    </div>
+    <div class="card gold-border">
+      <div class="card-label">Sou educadora</div>
+      <div class="card-body" style="color:var(--text)">Isso tem uma implicação específica: você não é minha paciente, não é consumidora de um serviço pronto e não é seguidora no sentido de quem absorve conteúdo passivamente. Você é protagonista do próprio processo. Meu papel é criar as condições, a linguagem, o confronto e a direção para que esse processo aconteça. O movimento é seu.</div>
+    </div>
+  </div>
+
+  <!-- ======== PILARES ======== -->
+  <div class="page" id="page-pilares">
+    <div class="eyebrow">Tom de voz</div>
+    <h1 class="page-title">5 Pilares editoriais</h1>
+
+    <div class="quote">
+      <p>Antes de qualquer conceito, qualquer direção, qualquer confronto: primeiro, a cena. O que essa mulher está vivendo, com a precisão que ela nunca encontrou em outro post sobre o tema. Se o texto começa no abstrato, está errado. Se a primeira frase poderia abrir qualquer post sobre o tema, está errada.</p>
+      <div class="q-src">A REGRA DE OURO · guia de tom de voz</div>
+    </div>
+
+    <div class="div"></div>
+
+    <div class="card" style="margin-bottom:8px">
+      <div class="card-label">Pilar 1</div>
+      <div class="card-title">Concretude como método</div>
+      <div class="card-body">Tudo ancorado em fatos reais e específicos: escola com nome, rua com nome, ano, situação concreta. A emoção vive nos acontecimentos, não nos adjetivos. "Foi devastador" não é a linguagem da marca. A marca descreve o que aconteceu e o que teve que fazer no dia seguinte. Abstração sem âncora real não é a linguagem. Quando o texto flutua, está errado.</div>
+    </div>
+    <div class="card" style="margin-bottom:8px">
+      <div class="card-label">Pilar 2</div>
+      <div class="card-title">Firmeza com sensibilidade</div>
+      <div class="card-body">Diz o que precisa ser dito, inclusive o que incomoda, mas sem agredir, humilhar ou culpar quem chegou até ali cansada. Aponta o padrão, não a falha moral da pessoa. Firmeza aqui não é dureza, é clareza que respeita.</div>
+    </div>
+    <div class="card" style="margin-bottom:8px">
+      <div class="card-label">Pilar 3</div>
+      <div class="card-title">Educação antes de inspiração</div>
+      <div class="card-body">A voz não existe para motivar por alguns minutos. Existe para nomear padrões, organizar pensamentos e abrir caminho para mudança real. O filtro de qualquer texto: isso ensina algo concreto, ou apenas faz a pessoa se sentir vista por 30 segundos? Os dois têm valor, mas o segundo nunca pode ser o objetivo principal.</div>
+    </div>
+    <div class="card" style="margin-bottom:8px">
+      <div class="card-label">Pilar 4</div>
+      <div class="card-title">Escuta que conduz</div>
+      <div class="card-body">Não fala só para acolher desabafo. A escuta tem direção: percebe o que está por trás da fala, do silêncio e do comportamento, e conduz da confusão para a consciência, e da consciência para a postura. Acolhimento sem direção não é a linguagem da marca. Não deixa a mulher confortável no padrão que está custando caro para ela.</div>
+    </div>
+    <div class="card">
+      <div class="card-label">Pilar 5</div>
+      <div class="card-title">Vida real sem espetáculo</div>
+      <div class="card-body">A história de Flávia é base de autoridade, não performance de sofrimento. A arte e o teatro entram como método, não como curiosidade biográfica. Fala-se de perda, separação, recomeço com a objetividade de quem passou por isso e tirou aprendizado concreto. Dor vira ferramenta de clareza, nunca frase de efeito.</div>
+    </div>
+
+    <div class="div"></div>
+
+    <div class="card-label" style="margin-bottom:10px">Ritmo do texto</div>
+    <div class="card">
+      <div class="card-body">O texto natural da marca constrói ideias dentro de frases mais longas, conectadas por vírgulas e conjunções. Usa "e" para dar continuidade, "porque" para explicar, "assim" para concluir. Frases curtas aparecem quando o peso do que foi dito já está claro pelo contexto, não para criar impacto artificial. Fragmentar tudo em pontos finais tira o ritmo da marca e faz soar como coach de rede social.</div>
+    </div>
+
+    <div class="div"></div>
+
+    <div class="card-label" style="margin-bottom:10px">Como a história pessoal entra</div>
+    <div class="card">
+      <div class="card-body">A história entra para dar credibilidade a um ponto concreto, nunca como ponto em si. Usa-se um recorte específico de uma experiência para sustentar o que está sendo ensinado. A história não é contada para criar emoção: usa-se um momento dela para provar algo real. No primeiro caso, Flávia é a protagonista. No segundo, ela é quem ensina. A diferença é sutil, mas muda tudo.</div>
+    </div>
+
+    <div class="div"></div>
+
+    <div class="card-label" style="margin-bottom:10px">Como tratar o "você"</div>
+    <div class="card">
+      <div class="card-body">A leitora é tratada como adulta que já sabe que algo está errado e precisa de clareza, não de incentivo. Não condescende ("você consegue!"), não culpa ("você precisa parar de..."), não bajula ("você é incrível"). Nomeia o que está acontecendo com precisão e aponta direção. O respeito está em não suavizar o que é verdade e não inflar o que é óbvio.</div>
+    </div>
+  </div>
+
+  <!-- ======== VOCABULÁRIO ======== -->
+  <div class="page" id="page-vocabulario">
+    <div class="eyebrow">Tom de voz</div>
+    <h1 class="page-title">Vocabulário</h1>
+
+    <div class="cmp">
+      <div class="cmp-col">
+        <div class="cmp-head g">✓ Usar</div>
+        <div class="cmp-row">Concreto, na prática, no cotidiano</div>
+        <div class="cmp-row">Reconstruir, reorganizar, reposicionar</div>
+        <div class="cmp-row">Sustentação, base emocional</div>
+        <div class="cmp-row">Padrão, postura, consciência</div>
+        <div class="cmp-row">Autonomia, direção, identidade</div>
+        <div class="cmp-row">Nomear, nomeou (dar nome ao que a pessoa vive)</div>
+        <div class="cmp-row">"Aos poucos", "com o tempo", "ao longo de"</div>
+        <div class="cmp-row">"Com clareza", "com responsabilidade"</div>
+        <div class="cmp-row">Dignidade, respeito, paz (quando concretos, não de efeito)</div>
+        <div class="cmp-row">Referências situadas: escola, cidade, ano, nome de pessoa</div>
+        <div class="cmp-row">Paulo Freire, Boal, EJA (quando o contexto pede)</div>
+      </div>
+      <div class="cmp-col">
+        <div class="cmp-head r">❌ Nunca usar</div>
+        <div class="cmp-row">Liberdade financeira</div>
+        <div class="cmp-row">Vida dos sonhos</div>
+        <div class="cmp-row">Fórmula exclusiva / segredo</div>
+        <div class="cmp-row">Destravar / virada de chave</div>
+        <div class="cmp-row">Próximo nível / jornada / propósito</div>
+        <div class="cmp-row">Sucesso inevitável</div>
+        <div class="cmp-row">Ressignificar / se permitir / brilhar</div>
+        <div class="cmp-row">Florescer / despertar (sentido motivacional)</div>
+        <div class="cmp-row">Mulher poderosa / guerreira / rainha</div>
+        <div class="cmp-row">Cura como produto ("a cura que você precisa")</div>
+        <div class="cmp-row">"Você consegue" / "acredite em você"</div>
+        <div class="cmp-row">"Vai dar certo" / "você merece"</div>
+        <div class="cmp-row">Incrível / extraordinário como intensificadores vazios</div>
+        <div class="cmp-row">Travessão em qualquer hipótese</div>
+      </div>
+    </div>
+
+    <div class="div"></div>
+
+    <div class="card-label" style="margin-bottom:14px">Antes e depois · exemplos do documento</div>
+
+    <div class="card-label" style="margin-bottom:6px">Exemplo 1 · conteúdo genérico vs. voz real</div>
+    <div class="cmp">
+      <div class="cmp-col">
+        <div class="cmp-head r">❌ Antes (genérico)</div>
+        <div class="cmp-row" style="line-height:1.6;padding:10px 0">"Você tem o poder de mudar sua vida. Acredite em você, dê o primeiro passo e se transforme. Você merece uma vida com propósito, alegria e liberdade."</div>
+      </div>
+      <div class="cmp-col">
+        <div class="cmp-head g">✓ Depois (voz da marca)</div>
+        <div class="cmp-row" style="line-height:1.6;padding:10px 0">"Uma mulher que passou anos sustentando tudo para todos não muda de postura com uma frase de incentivo. Ela muda quando alguém nomeia com precisão o que está acontecendo, quando o processo tem direção real, e quando ela para de ser a única coisa que ficou fora do que construiu."</div>
+      </div>
+    </div>
+
+    <div class="card-label" style="margin-bottom:6px;margin-top:14px">Exemplo 2 · abertura de conteúdo</div>
+    <div class="cmp">
+      <div class="cmp-col">
+        <div class="cmp-head r">❌ Antes (abertura errada)</div>
+        <div class="cmp-row" style="line-height:1.6;padding:10px 0">"Hoje vou falar sobre limites e por que é tão difícil para nós mulheres dizer não. Fica aqui que vai ser importante!"</div>
+      </div>
+      <div class="cmp-col">
+        <div class="cmp-head g">✓ Depois (voz da marca)</div>
+        <div class="cmp-row" style="line-height:1.6;padding:10px 0">"Você disse sim mais uma vez quando queria dizer não. Depois ficou horas remoendo. E a culpa que veio depois não foi por ter dito sim, foi por ter desejado dizer não. Esse ciclo tem nome e tem saída, mas a saída não começa pelo não. Começa por entender o que você aprendeu que acontece quando você se coloca."</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======== REGRAS TÉCNICAS ======== -->
+  <div class="page" id="page-regras">
+    <div class="eyebrow">Tom de voz</div>
+    <h1 class="page-title">Regras técnicas de escrita</h1>
+
+    <div class="alert alert-w">Os documentos de posicionamento foram gerados com IA e contêm construções que a marca proibiu. Eles são referência de conteúdo e estratégia, não de voz. A voz real está no texto do livro e nos exemplos deste guia.</div>
+
+    <div class="card-label" style="margin-bottom:10px">Construções proibidas</div>
+    <div class="card" style="margin-bottom:8px">
+      <div class="card-label">Tríades paralelas</div>
+      <div class="card-body">"Com verdade, clareza e coragem" é construção de texto gerado, não de pessoa falando. Proibido.</div>
+    </div>
+    <div class="card" style="margin-bottom:8px">
+      <div class="card-label">Transições inseridas mecanicamente</div>
+      <div class="card-body">"Além disso", "por outro lado", "em suma", "é importante notar que" — todos proibidos.</div>
+    </div>
+    <div class="card" style="margin-bottom:8px">
+      <div class="card-label">Conclusão que resume o que foi dito</div>
+      <div class="card-body">Como se a pessoa não tivesse lido. Proibido.</div>
+    </div>
+    <div class="card" style="margin-bottom:8px">
+      <div class="card-label">Adjetivos genéricos empilhados</div>
+      <div class="card-body">"Processo profundo e transformador" — correto, mas genérico. Proibido como recurso padrão.</div>
+    </div>
+    <div class="card" style="margin-bottom:8px">
+      <div class="card-label">Frases de abertura de parágrafo</div>
+      <div class="card-body">"É fundamental que" e "Vale ressaltar que" — proibidos.</div>
+    </div>
+    <div class="card" style="margin-bottom:8px">
+      <div class="card-label">Construções equilibradas artificialmente</div>
+      <div class="card-body">"De um lado X, de outro Y, no centro Z" — proibido.</div>
+    </div>
+    <div class="card" style="margin-bottom:8px">
+      <div class="card-label">Construção "não é sobre X, é sobre Y"</div>
+      <div class="card-body">Proibido em qualquer hipótese.</div>
+    </div>
+    <div class="card">
+      <div class="card-label">Travessão</div>
+      <div class="card-body">Nunca usar. Em qualquer hipótese. Sem exceção.</div>
+    </div>
+
+    <div class="div"></div>
+
+    <div class="card-label" style="margin-bottom:10px">Encerramento</div>
+    <div class="card">
+      <div class="card-body">Os fechamentos deixam uma direção concreta ou uma pergunta que a mulher vai carregar. Nunca uma frase de efeito. Nunca três palavras paralelas para criar drama. O encerramento é a parte mais afiada do que foi dito, não uma decoração sobre o que acabou de ser dito.</div>
+    </div>
+  </div>
+
+  <!-- ======== AVATAR ======== -->
+  <div class="page" id="page-avatar">
+    <div class="eyebrow">Avatar</div>
+    <h1 class="page-title">Perfil & Dores</h1>
+    <p class="page-desc">Nome simbólico: Ana Paula. Não é uma pessoa real. É o mapa de comportamentos, padrões e realidade da cliente ideal.</p>
+
+    <div class="g2" style="margin-bottom:10px">
+      <div class="card"><div class="card-label">Idade</div><div class="card-title">38 a 52 anos</div><div class="card-body" style="font-size:12px">Geração X ou Millennial mais velha. Cresceu em contexto de família com papéis tradicionais bem definidos onde questionar era transgressor.</div></div>
+      <div class="card"><div class="card-label">Classe</div><div class="card-title">C e B</div><div class="card-body" style="font-size:12px">Renda familiar entre R$ 2.500 e R$ 6.000. Gasta com família, filhos e casa antes de gastar consigo. Quando investe em si, pesquisa antes, demora a decidir e precisa sentir que o investimento tem retorno concreto.</div></div>
+      <div class="card"><div class="card-label">Localização</div><div class="card-title">Regiões metropolitanas</div><div class="card-body" style="font-size:12px">Concentração maior em SP e outras capitais. Zona leste, norte e sul. Também em cidades médias do interior. Não é a mulher da elite dos grandes centros. Construiu o que tem com muito empenho.</div></div>
+      <div class="card"><div class="card-label">Profissão</div><div class="card-title">Educação, saúde, serviço público</div><div class="card-body" style="font-size:12px">Comércio, administração, atendimento, cuidado. No trabalho é respeitada e competente. Em casa e nos relacionamentos, é invisível ou sobrecarregada.</div></div>
+    </div>
+
+    <div class="div"></div>
+
+    <div class="card-label" style="margin-bottom:10px">Rotina diária</div>
+    <div class="card">
+      <div class="card-body">Acorda cedo, resolve questões da casa, dos filhos, do trabalho. O dia é organizado em função dos outros. Raramente tem uma hora que seja genuinamente dela. Quando tem tempo livre, consome conteúdo nas redes como forma de descanso, mas com frequência esse consumo é passivo: salva, assiste, se identifica, não age. Dorme pensando no que precisa resolver amanhã. O autocuidado, quando existe, é pontual e secundário.</div>
+    </div>
+
+    <div class="div"></div>
+
+    <div class="card-label" style="margin-bottom:10px">Dores centrais</div>
+    <div class="card" style="margin-bottom:6px"><div class="card-body">Cansaço crônico de dar conta de tudo para todos. Sensação de que desapareceu de si mesma sem perceber quando isso aconteceu.</div></div>
+    <div class="card" style="margin-bottom:6px"><div class="card-body">Dificuldade de dizer não sem sentir culpa depois. Sentir que é respeitada pelas responsabilidades que carrega, não por quem é.</div></div>
+    <div class="card" style="margin-bottom:6px"><div class="card-body">Raiva que não consegue expressar e vai virando amargura com o tempo. Tristeza sem causa clara que justifica com trabalho e rotina para não precisar enfrentá-la.</div></div>
+    <div class="card"><div class="card-body">Sensação de que está funcionando, não vivendo. Perceber que cuida de todo mundo, mas ninguém cuida dela com a mesma dedicação.</div></div>
+
+    <div class="div"></div>
+
+    <div class="card-label" style="margin-bottom:10px">Vocabulário real dela</div>
+    <div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:20px">
+      <span class="tag tg">"Estou cansada"</span>
+      <span class="tag tg">"Estou no limite"</span>
+      <span class="tag tg">"Eu me perdi"</span>
+      <span class="tag tg">"Parece que eu virei função"</span>
+      <span class="tag tg">"Não consigo dizer não"</span>
+      <span class="tag tg">"Me sinto invisível"</span>
+      <span class="tag tg">"Ninguém me vê"</span>
+      <span class="tag tg">"Eu cuido de todo mundo mas ninguém cuida de mim"</span>
+      <span class="tag tg">"Queria ter coragem de me escolher"</span>
+      <span class="tag tg">"Eu só quero paz"</span>
+      <span class="tag tg">"Não sei mais quem eu sou"</span>
+      <span class="tag tg">"Estou funcionando, mas não estou bem"</span>
+      <span class="tag tg">"Não quero mais ser forte desse jeito"</span>
+      <span class="tag tg">"Não quero abandonar minha família, eu só não quero mais me abandonar"</span>
+    </div>
+
+    <div class="card-label" style="margin-bottom:10px">Nível de consciência</div>
+    <div class="g3">
+      <div class="card">
+        <div class="card-label">Nível 2 · maioria</div>
+        <div class="card-title">Consciente do problema</div>
+        <div class="card-body" style="font-size:12px">Sabe que algo está errado, sente o cansaço e a desconexão, mas ainda não nomeou o que está acontecendo e não sabe o que fazer. A comunicação precisa nomear o problema com precisão para ativar esse perfil.</div>
+      </div>
+      <div class="card">
+        <div class="card-label">Nível 3 · parte significativa</div>
+        <div class="card-title">Consciente da necessidade</div>
+        <div class="card-body" style="font-size:12px">Sabe que precisa de algo, está pesquisando, mas ainda não encontrou alguém ou algo que inspire confiança suficiente. A comunicação precisa mostrar diferencial e construir confiança.</div>
+      </div>
+      <div class="card">
+        <div class="card-label">Anti-avatar</div>
+        <div class="card-title">Quem não é o público</div>
+        <div class="card-body" style="font-size:12px">Mulher que quer só validação sem processo. Que quer terceirizar a responsabilidade pela própria vida. Que busca cura rápida. Que não tem abertura para reflexão, responsabilidade e prática.</div>
+      </div>
+    </div>
+
+    <div class="div"></div>
+
+    <div class="alert alert-w">Risco estratégico: se a comunicação tentar falar com toda mulher cansada, toda mulher sobrecarregada, toda mulher que sofreu, a marca perde força comercial e vira mais uma voz genérica. O centro é: mulher madura, funcional, responsável, que sustentou muita coisa por muito tempo, mas agora percebe que se perdeu de si e quer reconstruir identidade, limites, autoestima e paz.</div>
+  </div>
+
+  <!-- ======== GATILHOS ======== -->
+  <div class="page" id="page-gatilhos">
+    <div class="eyebrow">Avatar</div>
+    <h1 class="page-title">Gatilhos & Objeções</h1>
+
+    <div class="card-label" style="margin-bottom:10px">Gatilho de compra · 3 elementos simultâneos</div>
+    <div class="g3" style="margin-bottom:20px">
+      <div class="card gold-border">
+        <div class="card-label">01</div>
+        <div class="card-title">Identificação</div>
+        <div class="card-body" style="font-size:12px">"Ela está falando exatamente de mim, não de uma versão genérica, mas da minha situação real."</div>
+      </div>
+      <div class="card gold-border">
+        <div class="card-label">02</div>
+        <div class="card-title">Segurança</div>
+        <div class="card-body" style="font-size:12px">"Não vou ser julgada nem exposta. Posso aparecer com as contradições que tenho."</div>
+      </div>
+      <div class="card gold-border">
+        <div class="card-label">03</div>
+        <div class="card-title">Direção</div>
+        <div class="card-body" style="font-size:12px">"Isso não é só reflexão e acolhimento. Tem caminho concreto para onde preciso chegar."</div>
+      </div>
+    </div>
+
+    <div class="alert alert-r">Falta qualquer um dos três e ela não compra, mesmo com identificação emocional alta.</div>
+
+    <div class="div"></div>
+
+    <div class="card-label" style="margin-bottom:10px">Como ela decide comprar · processo típico</div>
+    <div class="card" style="margin-bottom:6px"><div class="card-body"><strong style="color:var(--text)">1.</strong> Identifica-se com um conteúdo e começa a seguir o perfil</div></div>
+    <div class="card" style="margin-bottom:6px"><div class="card-body"><strong style="color:var(--text)">2.</strong> Consome mais conteúdo por dias ou semanas</div></div>
+    <div class="card" style="margin-bottom:6px"><div class="card-body"><strong style="color:var(--text)">3.</strong> Pesquisa depoimentos e resultados reais de outras pessoas parecidas com ela</div></div>
+    <div class="card" style="margin-bottom:6px"><div class="card-body"><strong style="color:var(--text)">4.</strong> Pondera o preço em relação ao que tem disponível e ao que já tentou antes</div></div>
+    <div class="card" style="margin-bottom:6px"><div class="card-body"><strong style="color:var(--text)">5.</strong> Posterga a decisão, frequentemente por medo de se decepcionar de novo</div></div>
+    <div class="card"><div class="card-body"><strong style="color:var(--text)">6.</strong> Compra quando sente que a combinação de identificação, confiança e direção está presente ao mesmo tempo</div></div>
+
+    <div class="div"></div>
+
+    <div class="card-label" style="margin-bottom:10px">Objeções mais frequentes</div>
+    <div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:20px">
+      <span class="tag tg">"Não tenho tempo agora"</span>
+      <span class="tag tg">"Não sei se isso é para mim"</span>
+      <span class="tag tg">"Já tentei tanta coisa e voltei ao mesmo lugar"</span>
+      <span class="tag tg">"Tenho medo de mexer nisso e piorar"</span>
+      <span class="tag tg">"Não posso gastar comigo agora"</span>
+      <span class="tag tg">"Meu problema não é tão grave assim"</span>
+      <span class="tag tg">"Tenho vergonha de participar de grupo"</span>
+      <span class="tag tg">"Será que vai funcionar de verdade?"</span>
+      <span class="tag tg">"E se eu começar e não conseguir terminar?"</span>
+      <span class="tag tg">"E se minha família não entender?"</span>
+      <span class="tag tg">"Não quero falar da minha vida para desconhecidas"</span>
+      <span class="tag tg">"Não quero uma coisa rasa, cheia de frases bonitas"</span>
+    </div>
+
+    <div class="card-label" style="margin-bottom:10px">Como responder essas objeções no conteúdo (não na venda direta)</div>
+    <div class="card" style="margin-bottom:6px"><div class="card-body">Mostrar que o processo é educativo e tem direção, não é apenas escuta ou desabafo</div></div>
+    <div class="card" style="margin-bottom:6px"><div class="card-body">Mostrar que ela não precisa se expor mais do que deseja</div></div>
+    <div class="card" style="margin-bottom:6px"><div class="card-body">Mostrar que o objetivo não é implosão, é reorganização gradual da postura</div></div>
+    <div class="card" style="margin-bottom:6px"><div class="card-body">Mostrar que a mulher não precisa estar em colapso para buscar apoio: a mulher funcional também merece suporte</div></div>
+    <div class="card"><div class="card-body">Mostrar que o trabalho não substitui terapia, mas complementa processos de consciência, educação emocional e direção prática</div></div>
+
+    <div class="div"></div>
+
+    <div class="card-label" style="margin-bottom:10px">O que para o scroll</div>
+    <div class="card" style="margin-bottom:6px"><div class="card-body">Uma frase de abertura que descreve exatamente algo que ela vive, mas que nunca tinha visto descrito daquela forma, com aquela precisão</div></div>
+    <div class="card" style="margin-bottom:6px"><div class="card-body">Um comportamento específico que ela reconhece em si (não uma generalidade, uma cena concreta)</div></div>
+    <div class="card" style="margin-bottom:6px"><div class="card-body">Um tom que não a julga mas também não a deixa confortável no próprio padrão</div></div>
+    <div class="card"><div class="card-body">Um rosto ou voz que transmite que passou por algo parecido sem precisar dizer isso explicitamente</div></div>
+
+    <div class="div"></div>
+
+    <div class="card-label" style="margin-bottom:10px">O que NÃO para o scroll</div>
+    <div class="alert alert-r">Frases genéricas de empoderamento. Listas de dicas sem identificação emocional prévia. Qualquer abertura que parece anúncio ou discurso de venda. Conteúdo que começa explicando quem é o criador antes de falar sobre ela.</div>
+  </div>
+
+  <!-- ======== TRANSFORMAÇÕES ======== -->
+  <div class="page" id="page-transformacoes">
+    <div class="eyebrow">Avatar</div>
+    <h1 class="page-title">Transformações</h1>
+    <p class="page-desc">10 eixos extraídos diretamente do documento. São a base da promessa comercial e de qualquer oferta.</p>
+
+    <div class="quote">
+      <p>Ela não quer abandonar a vida que construiu. Ela quer parar de ser a última prioridade dentro da própria vida.</p>
+      <div class="q-src">TRANSFORMAÇÃO CENTRAL · avatar ideal</div>
+    </div>
+
+    <div class="div"></div>
+
+    <div class="tr-row"><div class="tr-from">Cansada</div><div class="tr-arrow">→</div><div class="tr-to">Sustentada por dentro</div></div>
+    <div class="tr-row"><div class="tr-from">Anulada</div><div class="tr-arrow">→</div><div class="tr-to">Presente em sua própria vida</div></div>
+    <div class="tr-row"><div class="tr-from">Insegura</div><div class="tr-arrow">→</div><div class="tr-to">Consciente de seu valor</div></div>
+    <div class="tr-row"><div class="tr-from">Calada</div><div class="tr-arrow">→</div><div class="tr-to">Posicionada</div></div>
+    <div class="tr-row"><div class="tr-from">Culpada</div><div class="tr-arrow">→</div><div class="tr-to">Responsável pelas próprias escolhas</div></div>
+    <div class="tr-row"><div class="tr-from">Perdida</div><div class="tr-arrow">→</div><div class="tr-to">Direcionada</div></div>
+    <div class="tr-row"><div class="tr-from">Sobrecarregada</div><div class="tr-arrow">→</div><div class="tr-to">Mais leve</div></div>
+    <div class="tr-row"><div class="tr-from">Invisível</div><div class="tr-arrow">→</div><div class="tr-to">Reconhecida, começando por si mesma</div></div>
+    <div class="tr-row"><div class="tr-from">Sobrevivente</div><div class="tr-arrow">→</div><div class="tr-to">Protagonista da própria vida</div></div>
+    <div class="tr-row"><div class="tr-from">Forte por obrigação</div><div class="tr-arrow">→</div><div class="tr-to">Inteira por escolha</div></div>
+
+    <div class="div"></div>
+
+    <div class="card-label" style="margin-bottom:10px">Frases de resposta que Flávia pode usar no conteúdo</div>
+    <div class="card" style="margin-bottom:6px"><div class="card-body" style="font-family:'DM Serif Display',serif;font-size:14px;color:var(--text);font-style:italic">"O problema não é você cuidar dos outros, é desaparecer enquanto cuida."</div></div>
+    <div class="card" style="margin-bottom:6px"><div class="card-body" style="font-family:'DM Serif Display',serif;font-size:14px;color:var(--text);font-style:italic">"Ser forte não pode continuar sendo sinônimo de se abandonar."</div></div>
+    <div class="card" style="margin-bottom:6px"><div class="card-body" style="font-family:'DM Serif Display',serif;font-size:14px;color:var(--text);font-style:italic">"Você não está confusa por falta de inteligência, está sobrecarregada de silêncios acumulados."</div></div>
+    <div class="card" style="margin-bottom:6px"><div class="card-body" style="font-family:'DM Serif Display',serif;font-size:14px;color:var(--text);font-style:italic">"Voltar para si não é egoísmo, é responsabilidade com a própria vida."</div></div>
+    <div class="card" style="margin-bottom:6px"><div class="card-body" style="font-family:'DM Serif Display',serif;font-size:14px;color:var(--text);font-style:italic">"A mulher que você procura não sumiu, ela foi ficando para depois."</div></div>
+    <div class="card" style="margin-bottom:6px"><div class="card-body" style="font-family:'DM Serif Display',serif;font-size:14px;color:var(--text);font-style:italic">"Você não precisa parecer bem, você precisa estar inteira."</div></div>
+    <div class="card"><div class="card-body" style="font-family:'DM Serif Display',serif;font-size:14px;color:var(--text);font-style:italic">"Ela não vai ser julgada aqui. Mas também não vai ser só acolhida. Vai ser conduzida."</div></div>
+  </div>
+
+  <!-- ======== PRODUTOS ======== -->
+  <div class="page" id="page-produtos">
+    <div class="eyebrow">Avatar</div>
+    <h1 class="page-title">Estrutura de produto</h1>
+    <p class="page-desc">Mapa estratégico de produto extraído do documento. Coerente com o poder de compra e o comportamento de decisão do avatar.</p>
+
+    <div class="card" style="margin-bottom:10px">
+      <div class="card-label">Entrada · gerar confiança e primeira vitória</div>
+      <div class="card-title">Ebook, guia prático, aula gravada, diagnóstico, checklist, mini curso</div>
+      <div class="card-body">Função: fazer ela nomear o problema com clareza, mostrar a linguagem de Flávia, dar uma pequena vitória prática e preparar para uma oferta maior. Deve ter um investimento que ela consiga aprovar sozinha, sem precisar justificar para ninguém.</div>
+    </div>
+
+    <div class="card" style="margin-bottom:10px">
+      <div class="card-label">Intermediário · criar experiência de transformação</div>
+      <div class="card-title">Processo de 21 a 30 dias, grupo guiado, ciclo temático</div>
+      <div class="card-body">Temas: limites, autoestima, retorno a si. Função: criar a experiência de mudança real, gerar depoimentos concretos, validar a promessa e construir vínculo com a marca.</div>
+    </div>
+
+    <div class="card" style="margin-bottom:10px">
+      <div class="card-label">Premium · entregar profundidade e construir autoridade</div>
+      <div class="card-title">Mentoria em grupo, programa com encontros ao vivo, grupo pequeno com acompanhamento</div>
+      <div class="card-body">Função: entregar profundidade, criar comunidade, aumentar percepção de valor e construir autoridade que nenhum conteúdo gratuito constrói sozinho.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Comunidade · depois de audiência consolidada</div>
+      <div class="card-title">Faz sentido após audiência e vínculo consolidados</div>
+      <div class="card-body">Esse público precisa de continuidade, escuta e sensação de acompanhamento, mas uma comunidade sem audiência prévia não se sustenta e gera frustração dos dois lados.</div>
+    </div>
+
+    <div class="div"></div>
+
+    <div class="card-label" style="margin-bottom:10px">Por diferencial de produto que nenhuma formação confere</div>
+    <div class="quote">
+      <p>Não sou terapeuta, portanto não trabalho com processo clínico de aprofundamento psicológico. Não sou coach, portanto não trabalho com metas de performance ou metodologias de produtividade emocional. Sou educadora, com base em Paulo Freire e no teatro do oprimido, e isso significa que trato a mulher como protagonista do próprio processo, não como receptora de uma fórmula pronta. Além disso, tenho a credencial que nenhuma formação acadêmica confere: vivi o que ensino, pelo caminho mais difícil, sem atalho.</p>
+      <div class="q-src">PROPOSTA DE VALOR · posicionamento</div>
+    </div>
+  </div>
+
+  <!-- ======== CHECKLIST ======== -->
+  <div class="page" id="page-checklist">
+    <div class="eyebrow">Checklist</div>
+    <h1 class="page-title">Checklist de publicação</h1>
+    <p class="page-desc">Use antes de publicar qualquer conteúdo. Clique em cada item para marcar como verificado. Baseado nas regras do guia de tom de voz.</p>
+
+    <div class="card-label" style="margin-bottom:10px">Abertura</div>
+    <div class="ck" onclick="tick(this)"><div class="ck-box"></div><div class="ck-text">A primeira frase começa dentro da realidade da mulher, não apresentando o tema ou quem vai falar</div></div>
+    <div class="ck" onclick="tick(this)"><div class="ck-box"></div><div class="ck-text">A abertura não poderia ter sido escrita por qualquer criador de conteúdo sobre o mesmo assunto</div></div>
+    <div class="ck" onclick="tick(this)"><div class="ck-box"></div><div class="ck-text">Há um elemento concreto: comportamento específico, situação real ou detalhe que ela reconhece em si</div></div>
+    <div class="ck" onclick="tick(this)"><div class="ck-box"></div><div class="ck-text">Sem "hoje vou falar sobre", sem "fica aqui", sem apresentação inicial</div></div>
+
+    <div class="card-label" style="margin-bottom:10px;margin-top:20px">Tom e linguagem</div>
+    <div class="ck" onclick="tick(this)"><div class="ck-box"></div><div class="ck-text">Nenhuma palavra da lista proibida presente (verificar aba "Vocabulário")</div></div>
+    <div class="ck" onclick="tick(this)"><div class="ck-box"></div><div class="ck-text">Sem travessão em nenhuma hipótese</div></div>
+    <div class="ck" onclick="tick(this)"><div class="ck-box"></div><div class="ck-text">Sem três palavras paralelas no final para criar impacto ("paz, liberdade e transformação")</div></div>
+    <div class="ck" onclick="tick(this)"><div class="ck-box"></div><div class="ck-text">Sem construção "não é sobre X, é sobre Y"</div></div>
+    <div class="ck" onclick="tick(this)"><div class="ck-box"></div><div class="ck-text">Sem transições mecânicas: "além disso", "por outro lado", "em suma", "vale ressaltar que"</div></div>
+    <div class="ck" onclick="tick(this)"><div class="ck-box"></div><div class="ck-text">Texto fluido com frases conectadas, não fragmentado em pontos finais artificiais</div></div>
+    <div class="ck" onclick="tick(this)"><div class="ck-box"></div><div class="ck-text">Sem conclusão que resume o que acabou de ser dito</div></div>
+
+    <div class="card-label" style="margin-bottom:10px;margin-top:20px">Conteúdo e estrutura</div>
+    <div class="ck" onclick="tick(this)"><div class="ck-box"></div><div class="ck-text">O conteúdo ensina algo concreto, não apenas valida a emoção</div></div>
+    <div class="ck" onclick="tick(this)"><div class="ck-box"></div><div class="ck-text">Se a história de Flávia aparece, entra para sustentar um ponto concreto, não como protagonista em si</div></div>
+    <div class="ck" onclick="tick(this)"><div class="ck-box"></div><div class="ck-text">O encerramento deixa uma direção concreta ou uma pergunta real, nunca uma frase de efeito</div></div>
+    <div class="ck" onclick="tick(this)"><div class="ck-box"></div><div class="ck-text">A mulher é tratada como adulta capaz de se conduzir, não como vítima que precisa de resgate</div></div>
+
+    <div class="card-label" style="margin-bottom:10px;margin-top:20px">Foco estratégico</div>
+    <div class="ck" onclick="tick(this)"><div class="ck-box"></div><div class="ck-text">O conteúdo está dentro do centro: autoabandono feminino e reconstrução de identidade</div></div>
+    <div class="ck" onclick="tick(this)"><div class="ck-box"></div><div class="ck-text">Não reduziu a mulher a um único tema (relacionamento, maternidade, carreira) como se fosse o todo</div></div>
+    <div class="ck" onclick="tick(this)"><div class="ck-box"></div><div class="ck-text">O conteúdo serve a alguma fase: identificação, nomeação, confronto responsável, direção prática ou autoridade</div></div>
+
+    <div style="margin-top:22px">
+      <div class="card-label">Progresso</div>
+      <div class="prog-bar"><div class="prog-fill" id="pfill" style="width:0%"></div></div>
+      <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--text-dimmer);margin-top:5px" id="plabel">0 de 18 itens verificados</div>
+    </div>
+  </div>
+
+</main>
+
+<script>
+const titles={nicho:'Nicho',missao:'Missão & Manifesto',valores:'Valores',historia:'Brand Story',personalidade:'Personalidade',frases:'Frases de posicionamento',naoesou:'O que não sou',pilares:'5 Pilares editoriais',vocabulario:'Vocabulário',regras:'Regras técnicas',avatar:'Perfil & Dores',gatilhos:'Gatilhos & Objeções',transformacoes:'Transformações',produtos:'Estrutura de produto',checklist:'Checklist de publicação'};
+
+function go(id,el){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.s-item').forEach(n=>n.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  if(el) el.classList.add('active');
+  document.getElementById('ptitle').textContent=titles[id]||id;
+  if(window.innerWidth<=768) toggleMenu(false);
+  window.scrollTo(0,0);
+}
+
+function toggleMenu(force){
+  const s=document.getElementById('sidebar');
+  const o=document.getElementById('overlay');
+  const open=force!==undefined?force:!s.classList.contains('open');
+  s.classList.toggle('open',open);
+  o.classList.toggle('on',open);
+}
+
+function tick(el){
+  el.classList.toggle('done');
+  const b=el.querySelector('.ck-box');
+  b.innerHTML=el.classList.contains('done')?'<svg width="9" height="9" viewBox="0 0 12 12" fill="none" stroke="#0f0f0f" stroke-width="2.2"><polyline points="2,6 5,9 10,3"/></svg>':'';
+  const all=document.querySelectorAll('#page-checklist .ck').length;
+  const done=document.querySelectorAll('#page-checklist .ck.done').length;
+  document.getElementById('pfill').style.width=Math.round(done/all*100)+'%';
+  document.getElementById('plabel').textContent=done+' de '+all+' itens verificados';
+}
+
+function cp(id,text){
+  navigator.clipboard.writeText(text).catch(()=>{});
+  const b=document.getElementById(id);
+  b.textContent='copiado ✓';b.classList.add('ok');
+  setTimeout(()=>{b.textContent='copiar';b.classList.remove('ok');},2000);
+}
+</script>
+</body>
+</html>
